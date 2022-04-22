@@ -1,5 +1,9 @@
-package br.com.daianebellon.userservice.pessoa;
+package br.com.daianebellon.userservice.pessoa.service;
 
+import br.com.daianebellon.userservice.pessoa.converter.ConvertePessoa;
+import br.com.daianebellon.userservice.pessoa.domain.Pessoa;
+import br.com.daianebellon.userservice.pessoa.dto.PessoaDTO;
+import br.com.daianebellon.userservice.pessoa.repository.PessoaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

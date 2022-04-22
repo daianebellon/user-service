@@ -1,6 +1,8 @@
-package br.com.daianebellon.userservice.telefone;
+package br.com.daianebellon.userservice.pessoa.converter;
 
-import br.com.daianebellon.userservice.relacionamento.Relacionamento;
+import br.com.daianebellon.userservice.pessoa.domain.Telefone;
+import br.com.daianebellon.userservice.pessoa.domain.Relacionamento;
+import br.com.daianebellon.userservice.pessoa.dto.TelefoneDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

@@ -1,5 +1,6 @@
-package br.com.daianebellon.userservice.pessoa;
+package br.com.daianebellon.userservice.pessoa.repository;
 
+import br.com.daianebellon.userservice.pessoa.domain.Pessoa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

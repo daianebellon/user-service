@@ -1,5 +1,7 @@
-package br.com.daianebellon.userservice.endereo;
+package br.com.daianebellon.userservice.pessoa.converter;
 
+import br.com.daianebellon.userservice.pessoa.dto.EnderecoDTO;
+import br.com.daianebellon.userservice.pessoa.domain.Endereco;
 import org.springframework.stereotype.Component;
 
 @Component

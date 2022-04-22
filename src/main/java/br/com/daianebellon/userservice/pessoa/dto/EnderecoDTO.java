@@ -1,4 +1,4 @@
-package br.com.daianebellon.userservice.endereo;
+package br.com.daianebellon.userservice.pessoa.dto;
 
 import lombok.Getter;
 

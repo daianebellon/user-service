@@ -1,6 +1,6 @@
-package br.com.daianebellon.userservice.relacionamento;
+package br.com.daianebellon.userservice.pessoa.domain;
 
-import br.com.daianebellon.userservice.telefone.Telefone;
+import br.com.daianebellon.userservice.pessoa.domain.Telefone;
 import lombok.Data;
 
 import javax.persistence.*;

@@ -1,7 +1,5 @@
-package br.com.daianebellon.userservice.pessoa;
+package br.com.daianebellon.userservice.pessoa.dto;
 
-import br.com.daianebellon.userservice.endereo.EnderecoDTO;
-import br.com.daianebellon.userservice.telefone.TelefoneDTO;
 import lombok.Builder;
 import lombok.Getter;
 
