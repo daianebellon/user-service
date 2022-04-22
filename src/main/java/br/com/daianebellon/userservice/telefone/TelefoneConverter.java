@@ -9,7 +9,7 @@ import java.util.List;
 @Component
 public class TelefoneConverter {
 
-    public List<Telefone> getTelefones(List<TelefoneDTO> telefonesDTO) {
+    public List<Telefone> converter(List<TelefoneDTO> telefonesDTO) {
         ArrayList<Telefone> telefones = new ArrayList<>();
 
         for (TelefoneDTO telefoneDTO : telefonesDTO) {

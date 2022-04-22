@@ -19,27 +19,9 @@ public class ConvertePessoa {
         this.telefoneConverter = telefoneConverter;
     }
 
-    public Pessoa getPessoa(PessoaDTO pessoaDTO) {
-        Endereco endereco = enderecoConverter.getEndereco(pessoaDTO.getEndereco());
-        List<Telefone> telefones = telefoneConverter.getTelefones(pessoaDTO.getTelefones());
-
-        Pessoa pessoa = Pessoa.builder()
-                .nome(pessoaDTO.getNome())
-                .sobrenome(pessoaDTO.getSobrenome())
-                .dataNascimento(pessoaDTO.getDataNascimento())
-                .documentoPessoal(pessoaDTO.getDocumentoPessoal())
-                .endereco(endereco)
-                .telefones(telefones)
-                .build();
-
-        pessoa.getTelefones().forEach(telefone -> telefone.setPessoa(pessoa));
-
-        return pessoa;
-    }
-
-    public Pessoa getPessoaDTO(PessoaDTO pessoaDTO) {
-        Endereco endereco = enderecoConverter.getEndereco(pessoaDTO.getEndereco());
-        List<Telefone> telefones = telefoneConverter.getTelefones(pessoaDTO.getTelefones());
+    public Pessoa converter(PessoaDTO pessoaDTO) {
+        Endereco endereco = enderecoConverter.converter(pessoaDTO.getEndereco());
+        List<Telefone> telefones = telefoneConverter.converter(pessoaDTO.getTelefones());
 
         Pessoa pessoa = Pessoa.builder()
                 .nome(pessoaDTO.getNome())

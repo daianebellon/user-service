@@ -18,7 +18,7 @@ public class PessoaServiceImpl implements PessoaService {
     @Override
     public Pessoa save(PessoaDTO pessoaDTO) {
         ValidaPessoa.validar(pessoaDTO);
-        Pessoa pessoa = convertePessoa.getPessoa(pessoaDTO);
+        Pessoa pessoa = convertePessoa.converter(pessoaDTO);
 
         return pessoaRepository.save(pessoa);
     }

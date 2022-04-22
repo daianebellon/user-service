@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class EnderecoConverter {
 
-    public Endereco getEndereco(EnderecoDTO enderecoDTO) {
+    public Endereco converter(EnderecoDTO enderecoDTO) {
         Endereco endereco = new Endereco();
         endereco.setCep(enderecoDTO.getCep());
         endereco.setEstado(enderecoDTO.getEstado());
