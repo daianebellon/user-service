@@ -39,6 +39,8 @@ public class Endereco {
         this.numero = numero;
     }
 
+    public Endereco() {}
+
     public Long getId() {
         return id;
     }

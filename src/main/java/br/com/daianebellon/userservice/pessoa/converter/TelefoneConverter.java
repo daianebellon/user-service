@@ -23,6 +23,8 @@ public class TelefoneConverter {
                 relacionamento.setTelefone(telefone);
                 relacionamento.setParentesco(telefoneDTO.getRelacionamento().getParentesco());
                 telefone.setRelacionamento(relacionamento);
+            } else {
+                telefone.setRelacionamento(new Relacionamento());
             }
 
             telefones.add(telefone);
@@ -30,5 +32,4 @@ public class TelefoneConverter {
 
         return telefones;
     }
-
 }

@@ -47,8 +47,7 @@ public class Pessoa {
         this.telefones = telefones;
     }
 
-    public Pessoa() {
-    }
+    public Pessoa() {}
 
     public Long getId() {
         return id;

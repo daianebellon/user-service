@@ -1,12 +1,8 @@
 package br.com.daianebellon.userservice.pessoa.domain;
 
-import br.com.daianebellon.userservice.pessoa.domain.Telefone;
-import lombok.Data;
-
 import javax.persistence.*;
 
 @Entity
-@Data
 @Table(name = "relacionamento_telefone")
 public class Relacionamento {
 
@@ -22,4 +18,35 @@ public class Relacionamento {
     @OneToOne
     private Telefone telefone;
 
+    public Relacionamento(Long id, String parentesco, Telefone telefone) {
+        this.id = id;
+        this.parentesco = parentesco;
+        this.telefone = telefone;
+    }
+
+    public Relacionamento() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getParentesco() {
+        return parentesco;
+    }
+
+    public void setParentesco(String parentesco) {
+        this.parentesco = parentesco;
+    }
+
+    public Telefone getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(Telefone telefone) {
+        this.telefone = telefone;
+    }
 }
