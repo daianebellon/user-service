@@ -1,6 +1,8 @@
-package br.com.daianebellon.userservice.telefone;
+package br.com.daianebellon.userservice.pessoa.converter;
 
-import br.com.daianebellon.userservice.relacionamento.Relacionamento;
+import br.com.daianebellon.userservice.pessoa.domain.Telefone;
+import br.com.daianebellon.userservice.pessoa.domain.Relacionamento;
+import br.com.daianebellon.userservice.pessoa.dto.TelefoneDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -9,7 +11,7 @@ import java.util.List;
 @Component
 public class TelefoneConverter {
 
-    public List<Telefone> getTelefones(List<TelefoneDTO> telefonesDTO) {
+    public List<Telefone> converter(List<TelefoneDTO> telefonesDTO) {
         ArrayList<Telefone> telefones = new ArrayList<>();
 
         for (TelefoneDTO telefoneDTO : telefonesDTO) {
@@ -21,6 +23,8 @@ public class TelefoneConverter {
                 relacionamento.setTelefone(telefone);
                 relacionamento.setParentesco(telefoneDTO.getRelacionamento().getParentesco());
                 telefone.setRelacionamento(relacionamento);
+            } else {
+                telefone.setRelacionamento(new Relacionamento());
             }
 
             telefones.add(telefone);
@@ -28,5 +32,4 @@ public class TelefoneConverter {
 
         return telefones;
     }
-
 }

@@ -1,5 +1,8 @@
-package br.com.daianebellon.userservice.pessoa;
+package br.com.daianebellon.userservice.pessoa.controller;
 
+import br.com.daianebellon.userservice.pessoa.domain.Pessoa;
+import br.com.daianebellon.userservice.pessoa.dto.PessoaDTO;
+import br.com.daianebellon.userservice.pessoa.service.PessoaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
