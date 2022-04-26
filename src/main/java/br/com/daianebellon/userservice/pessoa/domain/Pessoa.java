@@ -30,11 +30,11 @@ public class Pessoa {
     @Column(name = "data_nascimento")
     private Date dataNascimento;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 
-    @OneToMany(mappedBy = "pessoa")
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
     private List<Telefone> telefones;
 
     public Pessoa(Long id, String nome, String sobrenome, String documentoPessoal, Date dataNascimento, Endereco endereco, List<Telefone> telefones) {
