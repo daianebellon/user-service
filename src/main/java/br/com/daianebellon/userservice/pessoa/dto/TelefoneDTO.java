@@ -1,5 +1,7 @@
 package br.com.daianebellon.userservice.pessoa.dto;
 
+import br.com.daianebellon.userservice.pessoa.domain.Pessoa;
+import br.com.daianebellon.userservice.pessoa.domain.Relacionamento;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +10,7 @@ import lombok.Setter;
 public class TelefoneDTO {
 
     private String numero;
-    private String parentesco;
+    private Pessoa pessoa;
+    private Relacionamento relacionamento;
 
 }

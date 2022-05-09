@@ -18,11 +18,13 @@ public class TelefoneConverter {
             Telefone telefone = new Telefone();
             telefone.setNumero(telefoneDTO.getNumero());
 
-            if (telefoneDTO.getParentesco() != null) {
+            if (telefoneDTO.getRelacionamento() != null) {
                 Relacionamento relacionamento = new Relacionamento();
                 relacionamento.setTelefone(telefone);
-                relacionamento.setParentesco(telefoneDTO.getParentesco());
+                relacionamento.setParentesco(telefoneDTO.getRelacionamento().getParentesco());
                 telefone.setRelacionamento(relacionamento);
+            } else {
+                telefone.setRelacionamento(new Relacionamento());
             }
 
             telefones.add(telefone);
