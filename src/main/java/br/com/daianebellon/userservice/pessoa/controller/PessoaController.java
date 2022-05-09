@@ -6,6 +6,8 @@ import br.com.daianebellon.userservice.pessoa.service.PessoaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/pessoa")
 public class PessoaController {
@@ -18,26 +20,17 @@ public class PessoaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Pessoa> getPessoa(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(pessoaService.findById(id));
+        Optional<Pessoa> pessoa = pessoaService.findById(id);
+
+        if (pessoa.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        } else {
+            return ResponseEntity.ok(pessoa.get());
+        }
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Long> cadastrar(@RequestBody PessoaDTO pessoaDTO) {
-        return ResponseEntity.ok(pessoaService.cadastrar(pessoaDTO));
-    }
-
-    @PutMapping("/editar/{id}")
-    public ResponseEntity<Long> editar(@PathVariable Long id, @RequestBody PessoaDTO pessoaDTO) {
-        return ResponseEntity.ok(pessoaService.editar(id, pessoaDTO));
-    }
-
-    @DeleteMapping("/excluir/{id}")
-    public ResponseEntity excluir(@PathVariable Long id) {
-        try {
-            pessoaService.excluir(id);
-        } catch (Exception e) {
-            ResponseEntity.badRequest();
-        }
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Pessoa> cadastrar(@RequestBody PessoaDTO pessoaDTO) {
+        return ResponseEntity.ok(pessoaService.save(pessoaDTO));
     }
 }
