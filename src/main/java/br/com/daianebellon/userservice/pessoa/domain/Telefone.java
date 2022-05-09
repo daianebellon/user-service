@@ -1,5 +1,7 @@
 package br.com.daianebellon.userservice.pessoa.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,11 +16,12 @@ public class Telefone {
     @Column(name = "numero")
     private String numero;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "pessoa_id")
     private Pessoa pessoa;
 
-    @OneToOne(mappedBy = "telefone")
+    @OneToOne(mappedBy = "telefone", cascade = CascadeType.ALL)
     private Relacionamento relacionamento;
 
     public Telefone(Long id, String numero, Pessoa pessoa, Relacionamento relacionamento) {

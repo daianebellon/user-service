@@ -1,5 +1,7 @@
 package br.com.daianebellon.userservice.pessoa.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,6 +16,7 @@ public class Relacionamento {
     @Column(name = "parentesco")
     private String parentesco;
 
+    @JsonIgnore
     @JoinColumn(name = "telefone_id")
     @OneToOne
     private Telefone telefone;
