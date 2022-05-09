@@ -5,7 +5,8 @@ import br.com.daianebellon.userservice.pessoa.dto.PessoaDTO;
 
 public interface PessoaService {
 
-    Long save(PessoaDTO pessoaDTO);
+    Long cadastrar(PessoaDTO pessoaDTO);
     Pessoa findById(Long id);
-
+    Long editar(Long id, PessoaDTO pessoaDTO);
+    void excluir(Long id);
 }

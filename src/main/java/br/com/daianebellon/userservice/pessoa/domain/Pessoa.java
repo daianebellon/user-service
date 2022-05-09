@@ -3,7 +3,7 @@ package br.com.daianebellon.userservice.pessoa.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -28,7 +28,7 @@ public class Pessoa {
     private String documentoPessoal;
 
     @Column(name = "data_nascimento")
-    private Date dataNascimento;
+    private LocalDate dataNascimento;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
@@ -37,7 +37,7 @@ public class Pessoa {
     @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
     private List<Telefone> telefones;
 
-    public Pessoa(Long id, String nome, String sobrenome, String documentoPessoal, Date dataNascimento, Endereco endereco, List<Telefone> telefones) {
+    public Pessoa(Long id, String nome, String sobrenome, String documentoPessoal, LocalDate dataNascimento, Endereco endereco, List<Telefone> telefones) {
         this.id = id;
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -81,11 +81,11 @@ public class Pessoa {
         this.documentoPessoal = documentoPessoal;
     }
 
-    public Date getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 

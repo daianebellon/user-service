@@ -23,6 +23,21 @@ public class PessoaController {
 
     @PostMapping("/cadastrar")
     public ResponseEntity<Long> cadastrar(@RequestBody PessoaDTO pessoaDTO) {
-        return ResponseEntity.ok(pessoaService.save(pessoaDTO));
+        return ResponseEntity.ok(pessoaService.cadastrar(pessoaDTO));
+    }
+
+    @PutMapping("/editar/{id}")
+    public ResponseEntity<Long> editar(@PathVariable Long id, @RequestBody PessoaDTO pessoaDTO) {
+        return ResponseEntity.ok(pessoaService.editar(id, pessoaDTO));
+    }
+
+    @DeleteMapping("/excluir/{id}")
+    public ResponseEntity excluir(@PathVariable Long id) {
+        try {
+            pessoaService.excluir(id);
+        } catch (Exception e) {
+            ResponseEntity.badRequest();
+        }
+        return ResponseEntity.ok().build();
     }
 }
