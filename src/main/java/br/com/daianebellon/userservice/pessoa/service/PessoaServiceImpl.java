@@ -8,6 +8,7 @@ import br.com.daianebellon.userservice.pessoa.exceptions.RegistroNaoEncontradoEx
 import br.com.daianebellon.userservice.pessoa.repository.PessoaRepository;
 import br.com.daianebellon.userservice.pessoa.validacoes.IdValidation;
 import br.com.daianebellon.userservice.pessoa.validacoes.PessoaValidation;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -41,11 +42,16 @@ public class PessoaServiceImpl implements PessoaService {
     }
 
     @Override
-    public void excluir(Long id) {
+    public ResponseEntity excluir(Long id) {
         pessoaRepository.findById(id).orElseThrow(
                 () -> new RegistroNaoEncontradoException(
                         String.format(ErrorMessages.PESSOA_NAO_ENCONTRADA_EXCEPTION.getMensagem(), id)));
-        pessoaRepository.deleteById(id);
+        try {
+            pessoaRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @Override

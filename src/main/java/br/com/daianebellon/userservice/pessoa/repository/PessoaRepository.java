@@ -12,6 +12,4 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 
     boolean existsByDocumentoPessoal(String documentoPessoal);
 
-    boolean existsByDocumentoPessoalAndIdIsNot(String documentoPessoal, Long id);
-
 }

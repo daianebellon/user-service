@@ -65,28 +65,22 @@ public class PessoaValidation {
 
         for (TelefoneDTO telefone : telefones) {
             //ver aqui: problema ao editar
-            boolean existeTelefoneCadastrado = telefoneRepository.existsTelefoneByNumero(telefone.getNumero());
-            if (existeTelefoneCadastrado) {
+            if (telefoneRepository.existsTelefoneByNumero(telefone.getNumero())) {
                 throw new CampoInvalidoException(String.format(ErrorMessages.EXISTE_TELEFONE_CADASTRADO_EXCEPTION.getMensagem(), "Telefone"));
             }
         }
     }
 
     private void validaDocumentoPessoal(String documentoPessoal, Long id) {
-        if (documentoPessoal == null || documentoPessoal.isBlank()) {
+        if (documentoPessoal == null || documentoPessoal.isBlank() && id == null) {
             throw new CampoInvalidoException(String.format(ErrorMessages.CAMPO_INVALIDO_EXCEPTION.getMensagem(), "Documento Pessoal"));
         }
 
-        if (documentoPessoal.length() != 11) {
-            if (documentoPessoal.length() != 14) {
-                throw new CampoInvalidoException(String.format(ErrorMessages.CAMPO_INVALIDO_EXCEPTION.getMensagem(), "Documento Pessoal"));
-            }
+        if (documentoPessoal.length() != 11 && documentoPessoal.length() != 14) {
+            throw new CampoInvalidoException(String.format(ErrorMessages.CAMPO_INVALIDO_EXCEPTION.getMensagem(), "Documento Pessoal"));
         }
 
-        boolean existeDocumentoPessoal = id != null
-                ? repository.existsByDocumentoPessoalAndIdIsNot(documentoPessoal, id)
-                : repository.existsByDocumentoPessoal(documentoPessoal);
-        if (existeDocumentoPessoal) {
+        if (repository.existsByDocumentoPessoal(documentoPessoal)) {
             throw new CampoInvalidoException(String.format(ErrorMessages.EXISTE_DOCUMENTO_PESSOAL_EXCEPTION.getMensagem(), "Documento Pessoal"));
         }
     }
