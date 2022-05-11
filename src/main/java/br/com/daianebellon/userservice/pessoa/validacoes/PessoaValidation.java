@@ -15,6 +15,13 @@ import java.util.List;
 @Component
 public class PessoaValidation {
 
+    private static final String NOME = "Nome";
+    private static final String SOBRENOME = "Sobrenome";
+    private static final String DATA_DE_NASCIMENTO = "Data de Nascimento";
+    private static final String DOCUMENTO_PESSOAL = "Documento Pessoal";
+    private static final String ENDERECO = "Endereço";
+    private static final String TELEFONE = "Telefone";
+
     private final PessoaRepository repository;
     private final TelefoneRepository telefoneRepository;
 
@@ -23,16 +30,16 @@ public class PessoaValidation {
         this.telefoneRepository = telefoneRepository;
     }
 
-    public void validar(PessoaDTO pessoaDTO, Long id) {
+    public void validar(PessoaDTO pessoaDTO) {
         if (pessoaDTO.getNome() == null || pessoaDTO.getNome().isBlank()) {
-            throw new CampoInvalidoException(String.format(ErrorMessages.CAMPO_INVALIDO_EXCEPTION.getMensagem(), "Nome"));
+            throw new CampoInvalidoException(String.format(ErrorMessages.CAMPO_INVALIDO_EXCEPTION.getMensagem(), NOME));
         }
 
         if (pessoaDTO.getSobrenome() == null || pessoaDTO.getSobrenome().isBlank()) {
-            throw new CampoInvalidoException(String.format(ErrorMessages.CAMPO_INVALIDO_EXCEPTION.getMensagem(), "Sobrenome"));
+            throw new CampoInvalidoException(String.format(ErrorMessages.CAMPO_INVALIDO_EXCEPTION.getMensagem(), SOBRENOME));
         }
 
-        validaDocumentoPessoal(pessoaDTO.getDocumentoPessoal(), id);
+        validaDocumentoPessoal(pessoaDTO.getDocumentoPessoal());
         validaTelefone(pessoaDTO.getTelefones());
         validaEndereco(pessoaDTO.getEndereco());
         validaDataNascimento(pessoaDTO);
@@ -40,54 +47,48 @@ public class PessoaValidation {
 
     private void validaDataNascimento(PessoaDTO pessoaDTO) {
         if (pessoaDTO.getDataNascimento() == null) {
-            throw new CampoInvalidoException(String.format(ErrorMessages.CAMPO_INVALIDO_EXCEPTION.getMensagem(), "Data de Nascimento"));
+            throw new CampoInvalidoException(String.format(ErrorMessages.CAMPO_INVALIDO_EXCEPTION.getMensagem(), DATA_DE_NASCIMENTO));
         }
 
         LocalDate dataNascimento = pessoaDTO.getDataNascimento();
         LocalDate dataAtual = LocalDate.now();
 
         if ((dataAtual.compareTo(dataNascimento)) < 18) {
-            throw new CampoInvalidoException(String.format(ErrorMessages.DATA_MENOR_QUE_DEZOITO_EXCEPTION.getMensagem(), "Data de Nascimento"));
+            throw new CampoInvalidoException(String.format(ErrorMessages.DATA_MENOR_QUE_DEZOITO_EXCEPTION.getMensagem(), DATA_DE_NASCIMENTO));
         }
     }
 
     private void validaEndereco(EnderecoDTO endereco) {
         if (endereco == null) {
-            throw new CampoInvalidoException(String.format(ErrorMessages.CAMPO_INVALIDO_EXCEPTION.getMensagem(), "Endereço"));
+            throw new CampoInvalidoException(String.format(ErrorMessages.CAMPO_INVALIDO_EXCEPTION.getMensagem(), ENDERECO));
         }
     }
 
 
     private void validaTelefone(List<TelefoneDTO> telefones) {
         if (telefones == null || telefones.isEmpty()) {
-            throw new CampoInvalidoException(String.format(ErrorMessages.CAMPO_INVALIDO_EXCEPTION.getMensagem(), "Telefone"));
+            throw new CampoInvalidoException(String.format(ErrorMessages.CAMPO_INVALIDO_EXCEPTION.getMensagem(), TELEFONE));
         }
 
         for (TelefoneDTO telefone : telefones) {
             //ver aqui: problema ao editar
-            boolean existeTelefoneCadastrado = telefoneRepository.existsTelefoneByNumero(telefone.getNumero());
-            if (existeTelefoneCadastrado) {
-                throw new CampoInvalidoException(String.format(ErrorMessages.EXISTE_TELEFONE_CADASTRADO_EXCEPTION.getMensagem(), "Telefone"));
+            if (telefoneRepository.existsTelefoneByNumero(telefone.getNumero())) {
+                throw new CampoInvalidoException(String.format(ErrorMessages.EXISTE_TELEFONE_CADASTRADO_EXCEPTION.getMensagem(), TELEFONE));
             }
         }
     }
 
-    private void validaDocumentoPessoal(String documentoPessoal, Long id) {
-        if (documentoPessoal == null || documentoPessoal.isBlank()) {
-            throw new CampoInvalidoException(String.format(ErrorMessages.CAMPO_INVALIDO_EXCEPTION.getMensagem(), "Documento Pessoal"));
+    private void validaDocumentoPessoal(String documentoPessoal) {
+        if (documentoPessoal == null) {
+            throw new CampoInvalidoException(String.format(ErrorMessages.CAMPO_INVALIDO_EXCEPTION.getMensagem(), DOCUMENTO_PESSOAL));
         }
 
-        if (documentoPessoal.length() != 11) {
-            if (documentoPessoal.length() != 14) {
-                throw new CampoInvalidoException(String.format(ErrorMessages.CAMPO_INVALIDO_EXCEPTION.getMensagem(), "Documento Pessoal"));
-            }
+        if (documentoPessoal.length() != 11 && documentoPessoal.length() != 14) {
+            throw new CampoInvalidoException(String.format(ErrorMessages.CAMPO_INVALIDO_EXCEPTION.getMensagem(), DOCUMENTO_PESSOAL));
         }
 
-        boolean existeDocumentoPessoal = id != null
-                ? repository.existsByDocumentoPessoalAndIdIsNot(documentoPessoal, id)
-                : repository.existsByDocumentoPessoal(documentoPessoal);
-        if (existeDocumentoPessoal) {
-            throw new CampoInvalidoException(String.format(ErrorMessages.EXISTE_DOCUMENTO_PESSOAL_EXCEPTION.getMensagem(), "Documento Pessoal"));
+        if (repository.existsByDocumentoPessoal(documentoPessoal)) {
+            throw new CampoInvalidoException(String.format(ErrorMessages.EXISTE_DOCUMENTO_PESSOAL_EXCEPTION.getMensagem(), DOCUMENTO_PESSOAL));
         }
     }
 }

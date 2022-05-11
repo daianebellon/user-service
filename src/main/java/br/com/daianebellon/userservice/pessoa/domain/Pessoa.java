@@ -23,7 +23,6 @@ public class Pessoa {
     @Column(name = "sobrenome")
     private String sobrenome;
 
-    @Size(min = 11, max = 14)
     @Column(name = "documento_pessoal")
     private String documentoPessoal;
 
