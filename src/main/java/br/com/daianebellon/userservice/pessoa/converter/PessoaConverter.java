@@ -24,6 +24,7 @@ public class PessoaConverter {
         List<Telefone> telefones = telefoneConverter.converter(pessoaDTO.getTelefones());
 
         Pessoa pessoa = new Pessoa();
+        pessoa.setId(pessoaDTO.getId());
         pessoa.setNome(pessoaDTO.getNome());
         pessoa.setSobrenome(pessoaDTO.getSobrenome());
         pessoa.setDocumentoPessoal(pessoaDTO.getDocumentoPessoal());

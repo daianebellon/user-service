@@ -13,6 +13,7 @@ import java.util.List;
 @Setter
 public class PessoaDTO {
 
+    private Long id;
     private String nome;
     private String sobrenome;
     private String documentoPessoal;
@@ -24,7 +25,7 @@ public class PessoaDTO {
 
     public List<TelefoneDTO> getTelefones() {
         if (telefones.size() > 2) {
-            throw new CampoInvalidoException(String.format(ErrorMessages.PESSOA_NAO_DEVE_POSSUIR_MAIS_QUE_DOIS_REGISTROS_EXCEPTION.getMensagem(), "telefones"));
+            throw new CampoInvalidoException(ErrorMessages.PESSOA_NAO_DEVE_POSSUIR_MAIS_QUE_DOIS_REGISTROS_EXCEPTION, "telefones");
         }
         return telefones;
     }
