@@ -7,7 +7,7 @@ public class IdValidation {
 
     public static void validar(Long id) {
         if (id == null) {
-            throw new CampoInvalidoException(String.format(ErrorMessages.CAMPO_INVALIDO_EXCEPTION.getMensagem(), "id"));
+            throw new CampoInvalidoException(ErrorMessages.CAMPO_INVALIDO_EXCEPTION, "id");
         }
     }
 }

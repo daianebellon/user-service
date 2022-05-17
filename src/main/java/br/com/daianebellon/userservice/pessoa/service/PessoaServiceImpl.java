@@ -26,26 +26,22 @@ public class PessoaServiceImpl implements PessoaService {
 
     @Override
     public Long cadastrar(PessoaDTO pessoaDTO) {
-        pessoaValidation.validar(pessoaDTO);
+        pessoaValidation.validaCadastroPessoaDTO(pessoaDTO);
         Pessoa pessoa = pessoaConverter.converter(pessoaDTO);
         return pessoaRepository.save(pessoa).getId();
     }
 
     @Override
     public Long editar(Long id, PessoaDTO pessoaDTO) {
-        pessoaRepository.findById(id).orElseThrow(
-                () -> new RegistroNaoEncontradoException(
-                        String.format(ErrorMessages.PESSOA_NAO_ENCONTRADA_EXCEPTION.getMensagem(), id)));
-        pessoaValidation.validar(pessoaDTO);
+        validaSeExistePessoa(id);
+        pessoaValidation.validaEditarPessoaDTO(pessoaDTO);
         Pessoa pessoa = pessoaConverter.converter(pessoaDTO);
         return pessoaRepository.save(pessoa).getId();
     }
 
     @Override
     public ResponseEntity excluir(Long id) {
-        pessoaRepository.findById(id).orElseThrow(
-                () -> new RegistroNaoEncontradoException(
-                        String.format(ErrorMessages.PESSOA_NAO_ENCONTRADA_EXCEPTION.getMensagem(), id)));
+        validaSeExistePessoa(id);
         try {
             pessoaRepository.deleteById(id);
             return ResponseEntity.ok().build();
@@ -58,6 +54,11 @@ public class PessoaServiceImpl implements PessoaService {
     public Pessoa findById(Long id) {
         IdValidation.validar(id);
         return pessoaRepository.findById(id).orElseThrow(
-                () -> new RegistroNaoEncontradoException(String.format(ErrorMessages.PESSOA_NAO_ENCONTRADA_EXCEPTION.getMensagem(), id)));
+                () -> new RegistroNaoEncontradoException(ErrorMessages.PESSOA_NAO_ENCONTRADA_EXCEPTION, id));
+    }
+
+    private void validaSeExistePessoa(Long id) {
+        pessoaRepository.findById(id).orElseThrow(
+                () -> new RegistroNaoEncontradoException(ErrorMessages.PESSOA_NAO_ENCONTRADA_EXCEPTION, id));
     }
 }
