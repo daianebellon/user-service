@@ -32,7 +32,7 @@ public class PessoaController {
     }
 
     @DeleteMapping("/excluir/{id}")
-    public ResponseEntity excluir(@PathVariable Long id) {
-        return ResponseEntity.ok(pessoaService.excluir(id));
+    public void excluir(@PathVariable Long id) {
+        pessoaService.excluir(id);
     }
 }

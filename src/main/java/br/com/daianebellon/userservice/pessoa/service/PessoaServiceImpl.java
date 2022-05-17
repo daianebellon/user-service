@@ -3,12 +3,11 @@ package br.com.daianebellon.userservice.pessoa.service;
 import br.com.daianebellon.userservice.pessoa.converter.PessoaConverter;
 import br.com.daianebellon.userservice.pessoa.domain.Pessoa;
 import br.com.daianebellon.userservice.pessoa.dto.PessoaDTO;
+import br.com.daianebellon.userservice.pessoa.exceptions.CampoInvalidoException;
 import br.com.daianebellon.userservice.pessoa.exceptions.ErrorMessages;
 import br.com.daianebellon.userservice.pessoa.exceptions.RegistroNaoEncontradoException;
 import br.com.daianebellon.userservice.pessoa.repository.PessoaRepository;
-import br.com.daianebellon.userservice.pessoa.validacoes.IdValidation;
 import br.com.daianebellon.userservice.pessoa.validacoes.PessoaValidation;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -40,25 +39,27 @@ public class PessoaServiceImpl implements PessoaService {
     }
 
     @Override
-    public ResponseEntity excluir(Long id) {
+    public void excluir(Long id) {
         validaSeExistePessoa(id);
-        try {
-            pessoaRepository.deleteById(id);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        pessoaRepository.deleteById(id);
     }
 
     @Override
     public Pessoa findById(Long id) {
-        IdValidation.validar(id);
+        if (id == null) {
+            throw new CampoInvalidoException(ErrorMessages.CAMPO_INVALIDO_EXCEPTION, "id");
+        }
         return pessoaRepository.findById(id).orElseThrow(
                 () -> new RegistroNaoEncontradoException(ErrorMessages.PESSOA_NAO_ENCONTRADA_EXCEPTION, id));
     }
 
     private void validaSeExistePessoa(Long id) {
-        pessoaRepository.findById(id).orElseThrow(
-                () -> new RegistroNaoEncontradoException(ErrorMessages.PESSOA_NAO_ENCONTRADA_EXCEPTION, id));
+        if (id == null) {
+            throw new CampoInvalidoException(ErrorMessages.CAMPO_INVALIDO_EXCEPTION, "id");
+        }
+
+        if (!pessoaRepository.existsById(id)) {
+            throw new RegistroNaoEncontradoException(ErrorMessages.PESSOA_NAO_ENCONTRADA_EXCEPTION, id);
+        }
     }
 }
