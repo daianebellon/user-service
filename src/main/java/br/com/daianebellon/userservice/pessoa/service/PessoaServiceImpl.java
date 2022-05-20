@@ -46,20 +46,21 @@ public class PessoaServiceImpl implements PessoaService {
 
     @Override
     public Pessoa findById(Long id) {
-        if (id == null) {
-            throw new CampoInvalidoException(ErrorMessages.CAMPO_INVALIDO_EXCEPTION, "id");
-        }
+        validaLongNull(id, "id");
         return pessoaRepository.findById(id).orElseThrow(
                 () -> new RegistroNaoEncontradoException(ErrorMessages.PESSOA_NAO_ENCONTRADA_EXCEPTION, id));
     }
 
     private void validaSeExistePessoa(Long id) {
-        if (id == null) {
-            throw new CampoInvalidoException(ErrorMessages.CAMPO_INVALIDO_EXCEPTION, "id");
-        }
-
+        validaLongNull(id, "id");
         if (!pessoaRepository.existsById(id)) {
             throw new RegistroNaoEncontradoException(ErrorMessages.PESSOA_NAO_ENCONTRADA_EXCEPTION, id);
+        }
+    }
+
+    private void validaLongNull(Long chave, String valor) {
+        if (chave == null) {
+            throw new CampoInvalidoException(ErrorMessages.CAMPO_INVALIDO_EXCEPTION, valor);
         }
     }
 }

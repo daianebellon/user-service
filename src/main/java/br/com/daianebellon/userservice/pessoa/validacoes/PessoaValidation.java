@@ -50,18 +50,18 @@ public class PessoaValidation {
     }
 
     private void validaPessoaDTO(PessoaDTO pessoaDTO) {
-        if (pessoaDTO.getNome() == null || pessoaDTO.getNome().isBlank()) {
-            throw new CampoInvalidoException(ErrorMessages.CAMPO_INVALIDO_EXCEPTION, NOME);
-        }
-
-        if (pessoaDTO.getSobrenome() == null || pessoaDTO.getSobrenome().isBlank()) {
-            throw new CampoInvalidoException(ErrorMessages.CAMPO_INVALIDO_EXCEPTION, SOBRENOME);
-        }
-
-        validaDocumentoPessoal(pessoaDTO.getDocumentoPessoal(), pessoaDTO.getId());
+        validaDados(pessoaDTO.getNome(), NOME);
+        validaDados(pessoaDTO.getSobrenome(), SOBRENOME);
+        validaDocumentoPessoal(pessoaDTO.getDocumentoPessoal());
         validaTelefone(pessoaDTO.getTelefones());
         validaEndereco(pessoaDTO.getEndereco());
         validaDataNascimento(pessoaDTO);
+    }
+
+    public void validaDados(String chave, String valor) {
+        if (chave == null || chave.isBlank()) {
+            throw new CampoInvalidoException(ErrorMessages.CAMPO_INVALIDO_EXCEPTION, valor);
+        }
     }
 
     private void validaDataNascimento(PessoaDTO pessoaDTO) {
@@ -90,7 +90,7 @@ public class PessoaValidation {
         }
     }
 
-    private void validaDocumentoPessoal(String documentoPessoal, Long id) {
+    private void validaDocumentoPessoal(String documentoPessoal) {
         if (documentoPessoal == null) {
             throw new CampoInvalidoException(ErrorMessages.CAMPO_INVALIDO_EXCEPTION, DOCUMENTO_PESSOAL);
         }
