@@ -35,12 +35,22 @@ class PessoaServiceTest {
     private PessoaRepository pessoaRepository;
 
     @Test
-    void deveCadastrarPessoa() {
-
-    }
-
-    @Test
     void cadastrar() {
+        PessoaDTO pessoaDTOMock = new PessoaDTO();
+        pessoaDTOMock.setId(2L);
+        pessoaDTOMock.setNome("Daiane");
+
+        Pessoa pessoaMock = new Pessoa();
+        pessoaMock.setId(2L);
+        pessoaMock.setNome("Daiane");
+
+        doNothing().when(pessoaValidation).validaCadastroPessoaDTO(pessoaDTOMock);
+        when(pessoaConverter.converter(pessoaDTOMock)).thenReturn(pessoaMock);
+        when(pessoaRepository.save(pessoaMock)).thenReturn(pessoaMock);
+
+        Long idPessoa = pessoaService.cadastrar(pessoaDTOMock);
+
+        assertEquals(pessoaDTOMock.getId(), idPessoa);
     }
 
     @Test
